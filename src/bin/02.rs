@@ -33,15 +33,10 @@ fn part1() {
 
 fn is_safe(row: &[usize]) -> bool {
     // check three things:
-    let mut decreasing = true;
-    let mut increasing = true;
-    let mut enough_dist = true;
-    for i in 0..(row.len() - 1) {
-        decreasing = decreasing && (row[i] > row[i + 1]);
-        increasing = increasing && (row[i] < row[i + 1]);
-        // check that at least one is done by increasing/decreasing
-        enough_dist = enough_dist && (row[i].abs_diff(row[i + 1]) < 4)
-    }
+    let decreasing = row.windows(2).all(|r| r[0] < r[1]);
+    let increasing = row.windows(2).all(|r| r[0] > r[1]);
+    // check that at least one is done by increasing/decreasing
+    let enough_dist = row.windows(2).all(|r| r[0].abs_diff(r[1]) < 4);
     (decreasing || increasing) && enough_dist
 }
 

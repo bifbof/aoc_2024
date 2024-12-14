@@ -1,6 +1,6 @@
 // I never want to look at this code again.
 // what a overcomplicated piece.
-// I think th edirections would be nice, but for such a small
+// I think the directions would be nice, but for such a small
 // exercise overkill.
 
 type Grid = Vec<Vec<char>>;
@@ -118,7 +118,7 @@ impl<'grid> Point<'grid> {
     }
 }
 
-impl<'grid> Iterator for Point<'grid> {
+impl Iterator for Point<'_> {
     type Item = Neighbor;
     fn next(&mut self) -> Option<Self::Item> {
         let dir = match self.dir {
@@ -155,8 +155,8 @@ fn part2() {
             }
             visited[x][y] = true;
             area += 1;
-            let mut pnt = Point::new((x, y), &grid);
-            while let Some(neigh) = pnt.next() {
+            let pnt = Point::new((x, y), &grid);
+            for neigh in pnt {
                 match neigh.pos {
                     Some((x, y)) if grid[x][y] == value => queue.push_back((x, y)),
                     _ => {

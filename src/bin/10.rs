@@ -7,6 +7,7 @@ fn main() {
     part2();
 }
 
+#[allow(clippy::type_complexity)]
 fn parse() -> (Vec<Vec<usize>>, [Vec<(usize, usize)>; 10]) {
     let data = std::fs::read_to_string("input/10.txt").expect("msg");
     let mut out = Vec::new();
