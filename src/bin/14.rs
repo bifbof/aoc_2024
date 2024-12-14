@@ -1,10 +1,11 @@
 use itertools::Itertools;
-use std::{cmp::Ordering, ops::Rem, usize};
+use std::{cmp::Ordering, ops::Rem};
 
 type Pos = (usize, usize);
 type Vel = (isize, isize);
 
 fn main() {
+    part1(103, 101, 100);
     part2(103, 101);
 }
 
@@ -36,6 +37,8 @@ fn part1(nrows: usize, ncols: usize, nsecs: isize) {
 
     let mut q = [0; 4];
     for ((x, y), (vx, vy)) in robot_pos.iter().zip(robot_vel) {
+        // if we push velocity directly into usize, multiple conversions
+        // wouldn't be necessary anymore. :)
         let x = x
             .wrapping_add_signed((nsecs * vx).rem_euclid(nrows as isize))
             .rem(nrows);
