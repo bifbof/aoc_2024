@@ -82,7 +82,7 @@ fn part1() {
             count_good += line[line.len() / 2];
         }
     }
-    println!("{}", count_good);
+    println!("{count_good}");
 }
 
 fn part2() {
@@ -98,7 +98,7 @@ fn part2() {
         while let Some((i1, i2)) = is_topologically_sorted(&line, &g) {
             line.swap(i1, i2);
         }
-        count += line[line.len() / 2]
+        count += line[line.len() / 2];
     }
-    println!("{}", count);
+    println!("{count}");
 }

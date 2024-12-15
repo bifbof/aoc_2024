@@ -122,7 +122,7 @@ fn part2() {
     }
     let mut idx = 0;
     let mut count = 0;
-    for block in blocks.iter() {
+    for block in &blocks {
         for _ in 0..block.len {
             count += idx * block.value;
             idx += 1;

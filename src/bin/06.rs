@@ -136,9 +136,10 @@ fn part2() {
                     None => break, // stepped outsize grid -> no loop
                     Some(g) => g,
                 };
-                match grid[new_guard.pos.0][new_guard.pos.1] {
-                    true => guard = guard.rotate90(),
-                    false => guard = new_guard,
+                guard = if grid[new_guard.pos.0][new_guard.pos.1] {
+                    guard.rotate90()
+                } else {
+                    new_guard
                 }
             }
         }

@@ -11,7 +11,7 @@ fn main() {
 fn parse() -> (Vec<Vec<usize>>, [Vec<(usize, usize)>; 10]) {
     let data = std::fs::read_to_string("input/10.txt").expect("msg");
     let mut out = Vec::new();
-    let mut indices = [(); 10].map(|_| Vec::new());
+    let mut indices = [(); 10].map(|()| Vec::new());
     for (row, line) in data.lines().enumerate() {
         let mut rowv = Vec::new();
         for (col, c) in line.chars().enumerate() {
@@ -69,13 +69,13 @@ fn part1() {
     let mut counter = vec![vec![HashSet::new(); ncols]; nrows];
 
     // initialize
-    for (x, y) in idx[9].iter() {
+    for (x, y) in &idx[9] {
         counter[*x][*y].insert((*x, *y));
     }
 
     // calculate updates
     for val in (0..9).rev() {
-        for (x, y) in idx[val].iter() {
+        for (x, y) in &idx[val] {
             let neighbors = Neighbors::create((*x, *y), (nrows, ncols));
             for (nx, ny) in neighbors {
                 if data[*x][*y] + 1 == data[nx][ny] {
@@ -87,7 +87,7 @@ fn part1() {
     }
     // extract solution
     let sum: usize = idx[0].iter().map(|(x, y)| counter[*x][*y].len()).sum();
-    println!("{}", sum);
+    println!("{sum}");
 }
 
 // well well well if part 1 accidently solved part 2 and I had to repair it.
@@ -104,7 +104,7 @@ fn part2() {
 
     // calculate updates
     for val in (0..9).rev() {
-        for (x, y) in idx[val].iter() {
+        for (x, y) in &idx[val] {
             let neighbors = Neighbors::create((*x, *y), (nrows, ncols));
             for (nx, ny) in neighbors {
                 if data[*x][*y] + 1 == data[nx][ny] {
@@ -115,5 +115,5 @@ fn part2() {
     }
     // extract solution
     let sum: usize = idx[0].iter().map(|(x, y)| counter[*x][*y]).sum();
-    println!("{}", sum);
+    println!("{sum}");
 }

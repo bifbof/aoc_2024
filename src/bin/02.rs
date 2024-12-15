@@ -28,7 +28,7 @@ fn part1() {
             num_safe += 1;
         }
     }
-    println!("safe: {}", num_safe);
+    println!("safe: {num_safe}");
 }
 
 fn is_safe(row: &[usize]) -> bool {
@@ -44,14 +44,14 @@ fn part2() {
     let matrix = parse();
     let mut num_safe = 0;
     for row in matrix {
-        if is_damper_safe(row) {
+        if is_damper_safe(&row) {
             num_safe += 1;
         }
     }
-    println!("safe: {}", num_safe);
+    println!("safe: {num_safe}");
 }
 
-fn is_damper_safe(row: Vec<usize>) -> bool {
+fn is_damper_safe(row: &[usize]) -> bool {
     for skip_idx in 0..row.len() {
         let new_row: Vec<usize> = row
             .iter()

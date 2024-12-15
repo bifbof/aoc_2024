@@ -14,7 +14,7 @@ enum Operator {
 }
 
 impl Operator {
-    fn apply(&self, lhs: usize, rhs: usize) -> usize {
+    fn apply(self, lhs: usize, rhs: usize) -> usize {
         match self {
             Self::Concat => lhs * (10_usize.pow(rhs.ilog10() + 1)) + rhs,
             Self::Mul => lhs * rhs,
@@ -22,7 +22,7 @@ impl Operator {
         }
     }
 
-    fn next_overflowing(&self) -> (Self, bool) {
+    fn next_overflowing(self) -> (Self, bool) {
         match self {
             Self::Concat => (Self::Mul, false),
             Self::Mul => (Self::Add, false),
@@ -102,5 +102,5 @@ fn part() {
             }
         }
     }
-    println!("{}", count);
+    println!("{count}");
 }

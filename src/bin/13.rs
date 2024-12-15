@@ -56,9 +56,7 @@ fn solve() {
         let r = ax / gcd(ax, ay);
         let lhs = q * px - r * py;
         let rhs = q * bx - r * by; // * m
-        if rhs == 0 {
-            panic!("Assumption that vectors are not colinear failed!");
-        }
+        assert!(rhs == 0, "Assumption that vectors are not colinear failed!");
         if lhs % rhs == 0 {
             let m = lhs / rhs;
             let n = (px - m * bx) / ax;

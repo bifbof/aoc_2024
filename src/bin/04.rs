@@ -72,7 +72,7 @@ fn part1() {
             }
         }
     }
-    println!("num xmas {}", count_xmas);
+    println!("num xmas {count_xmas}");
 }
 
 const DIRS4: [[isize; 2]; 4] = [[1, 1], [1, -1], [-1, -1], [-1, 1]];
@@ -113,5 +113,5 @@ fn part2() {
             }
         }
     }
-    println!("num x-mas {}", count_xmas);
+    println!("num x-mas {count_xmas}");
 }

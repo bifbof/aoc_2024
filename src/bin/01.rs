@@ -16,8 +16,8 @@ fn main() {
         left.push(l.parse().unwrap());
         right.push(r.parse().unwrap());
     }
-    left.sort();
-    right.sort();
+    left.sort_unstable();
+    right.sort_unstable();
 
     let distance: usize = zip(&left, &right).map(|(l, r)| l.abs_diff(*r)).sum();
 
@@ -31,6 +31,6 @@ fn main() {
     for val in &right {
         similarity += hm.get(val).unwrap_or(&0) * val;
     }
-    println!("distance:   {:-10}", distance);
-    println!("similarity: {:-10}", similarity);
+    println!("distance:   {distance:-10}");
+    println!("similarity: {similarity:-10}");
 }

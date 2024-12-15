@@ -19,7 +19,7 @@ fn main() {
             None => break,
             Some("don't()") => {
                 state = false;
-                idx += 7
+                idx += 7;
             },
             Some(_) => {},
         }
@@ -84,14 +84,14 @@ fn main() {
     for mul in muls {
         sum += mul.left * mul.right;
     }
-    println!("{}", sum);
+    println!("{sum}");
 }
 
 fn parse_number(s: Option<&str>) -> Option<usize> {
     let s = s?;
     let mut idx = 0;
     loop {
-        match s.get(idx..idx+1) {
+        match s.get(idx..=idx) {
             None => return None,
             Some("0" | "1" | "2" | "3" | "4" | "5"| "6" | "7" | "8" | "9") => idx += 1,
             Some(_) => break,
