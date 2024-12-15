@@ -37,7 +37,7 @@ fn parse_moves(moves: &str) -> Moves {
             '>' => Move::Right,
             'v' => Move::Down,
             '<' => Move::Left,
-            _ => panic!("invalid move"),
+            _ => unreachable!("invalid move"),
         })
         .collect()
 }
@@ -61,7 +61,7 @@ fn parse2() -> (Grid, Moves) {
                 '.' => ['.', '.'],
                 'O' => ['[', ']'],
                 '@' => ['@', '.'],
-                _ => panic!(),
+                _ => unreachable!(),
             })
             .collect();
         out.push(line);
@@ -86,7 +86,7 @@ fn can_move(grid: &Grid, pos: (usize, usize), m: &Move, rec: bool) -> bool {
             }
             b
         }
-        _ => panic!(),
+        _ => unreachable!(),
     }
 }
 
@@ -104,7 +104,7 @@ fn do_move(grid: &mut Grid, pos: (usize, usize), m: &Move) {
                 _ => {}
             }
         }
-        _ => panic!(),
+        _ => unreachable!(),
     }
 }
 
