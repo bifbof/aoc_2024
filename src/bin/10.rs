@@ -33,8 +33,8 @@ struct Neighbors {
 }
 
 impl Neighbors {
-    fn create(pos: (usize, usize), borders: (usize, usize)) -> Neighbors {
-        Neighbors {
+    fn create(pos: (usize, usize), borders: (usize, usize)) -> Self {
+        Self {
             x: pos.0,
             y: pos.1,
             nrows: borders.0,

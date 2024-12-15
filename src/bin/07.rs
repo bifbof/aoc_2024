@@ -16,17 +16,17 @@ enum Operator {
 impl Operator {
     fn apply(&self, lhs: usize, rhs: usize) -> usize {
         match self {
-            Operator::Concat => lhs * (10_usize.pow(rhs.ilog10() + 1)) + rhs,
-            Operator::Mul => lhs * rhs,
-            Operator::Add => lhs + rhs,
+            Self::Concat => lhs * (10_usize.pow(rhs.ilog10() + 1)) + rhs,
+            Self::Mul => lhs * rhs,
+            Self::Add => lhs + rhs,
         }
     }
 
     fn next_overflowing(&self) -> (Self, bool) {
         match self {
-            Operator::Concat => (Operator::Mul, false),
-            Operator::Mul => (Operator::Add, false),
-            Operator::Add => (Operator::default(), true),
+            Self::Concat => (Self::Mul, false),
+            Self::Mul => (Self::Add, false),
+            Self::Add => (Self::default(), true),
         }
     }
 }
@@ -53,7 +53,7 @@ impl Numbers {
         let decision = Some((0..nums.len()).map(|_| Operator::default()).collect());
         // potential optimization move operator of first entry directly to Operator::Add
         // -> 3x less work
-        Numbers { decision, nums }
+        Self { decision, nums }
     }
 }
 

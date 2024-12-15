@@ -79,7 +79,7 @@ struct Neighbor {
 }
 
 impl Neighbor {
-    fn in_direction_of(pos: Pos, dir: Direction, grid: &Grid) -> Neighbor {
+    fn in_direction_of(pos: Pos, dir: Direction, grid: &Grid) -> Self {
         let (x, y) = pos;
         let nrows = grid.len();
         let ncols = grid.first().unwrap().len();
@@ -99,7 +99,7 @@ impl Neighbor {
             Direction::Left => [(x + 1, y), (x, y)],
             Direction::Up => [(x, y), (x, y + 1)],
         };
-        Neighbor { pos, edge, dir }
+        Self { pos, edge, dir }
     }
 }
 
@@ -109,7 +109,7 @@ struct Point<'grid> {
     dir: Option<Direction>,
 }
 impl<'grid> Point<'grid> {
-    fn new(pos: Pos, grid: &'grid Grid) -> Point<'grid> {
+    fn new(pos: Pos, grid: &'grid Grid) -> Self {
         Point {
             pos,
             grid,

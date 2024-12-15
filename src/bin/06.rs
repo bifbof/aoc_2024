@@ -18,7 +18,7 @@ impl Guard {
     const DIRS: [(isize, isize); 4] = [(-1, 0), (0, 1), (1, 0), (0, -1)];
 
     fn create(pos: (usize, usize)) -> Self {
-        Guard {
+        Self {
             pos,
             dir: (-1, 0),
             dir_id: 0,
@@ -31,7 +31,7 @@ impl Guard {
             self.pos.1.checked_add_signed(self.dir.1)?,
         );
         if pos.0 < borders.0 && pos.1 < borders.1 {
-            Some(Guard {
+            Some(Self {
                 pos,
                 dir: self.dir,
                 dir_id: self.dir_id,
@@ -44,7 +44,7 @@ impl Guard {
     fn rotate90(&self) -> Self {
         let dir_id = (self.dir_id + 1).rem(Self::DIRS.len());
         let dir = *Self::DIRS.get(dir_id).unwrap();
-        Guard {
+        Self {
             pos: self.pos,
             dir,
             dir_id,

@@ -31,7 +31,7 @@ fn part1() {
     let mut num = 0;
     let mut idx = 0;
     for (&len, op) in data.iter().zip([Fill::Some, Fill::None].iter().cycle()) {
-        if let Fill::None = op {
+        if matches!(op, Fill::None) {
             idx += len;
             continue;
         }
@@ -59,10 +59,7 @@ fn part1() {
     let c = disk
         .iter()
         .enumerate()
-        .map(|(i, v)| match v {
-            None => 0,
-            Some(v) => v * i,
-        })
+        .map(|(i, v)| v.map_or(0, |v| v * i))
         .sum::<usize>();
     println!("{c}");
 }
