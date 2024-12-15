@@ -61,7 +61,6 @@ fn part1(nrows: usize, ncols: usize, nsecs: isize) {
 }
 
 fn print_grid(grid: &Vec<Vec<usize>>) {
-    print!("\x1B[2J");
     for row in grid {
         for val in row {
             if *val == 0 {
@@ -92,7 +91,7 @@ fn dfs(
     nrows: usize,
     ncols: usize,
 ) -> usize {
-    if visited[x][y] {
+    if visited[x][y] || grid[x][y] == 0 {
         return 0;
     }
     visited[x][y] = true;
@@ -124,15 +123,15 @@ fn part2(nrows: usize, ncols: usize) {
             grid[*x][*y] += 1;
         }
         let longest_line = dfs_preparation(&grid, nrows, ncols);
-        println!("{longest_line}");
         niter += 1;
         if longest_line > 100 {
             print_grid(&grid);
             println!("{niter}");
-            let mut s = String::new();
-            std::io::stdin()
-                .read_line(&mut s)
-                .expect("Did not enter a correct string");
+            break; /* for me finds on first try like that */
+            // let mut s = String::new();
+            // std::io::stdin()
+            //     .read_line(&mut s)
+            //     .expect("Did not enter a correct string");
         }
     }
 }
