@@ -1,7 +1,10 @@
 // went smoothly, my graph creation is way too long
 // so I thought fuck it and made the backtracking as ugly as it is. :)
 use itertools::Itertools;
-use std::{collections::{BinaryHeap, HashSet}, ops::Deref};
+use std::{
+    collections::{BinaryHeap, HashSet},
+    ops::Deref,
+};
 
 type Graph = Vec<Vec<Edge>>;
 type Start = (usize, usize);
@@ -14,7 +17,7 @@ struct Edge {
 }
 
 impl Edge {
-    fn new(node: usize, cost: usize) -> Self {
+    const fn new(node: usize, cost: usize) -> Self {
         Self { node, cost }
     }
 }
@@ -67,21 +70,6 @@ fn parse() -> (Grid<char>, Start, Goal) {
     (Grid { nrows, ncols, data }, start, goal)
 }
 
-// fn print_edge_info(e: &Edge) {
-//     let dir = e.node / 225;
-//     let node = e.node % 225;
-//     let row = node / 15;
-//     let col = node % 15;
-//     let dir = match dir {
-//         0 => "north",
-//         1 => "west",
-//         2 => "south",
-//         3 => "east",
-//         _ => panic!(),
-//     };
-//     println!("node ({row},{col}); {dir}; cost {}", e.cost);
-// }
-
 fn shortest_path(adj: &Graph, start: usize, goal: usize) -> Vec<usize> {
     let mut dist: Vec<_> = (0..adj.len()).map(|_| usize::MAX).collect();
     let mut heap = BinaryHeap::new();
@@ -121,24 +109,6 @@ fn rev_graph(old: &Graph) -> Graph {
     graph
 }
 
-fn backtrack(adj: &Graph, dist: &[usize], mut visited: HashSet<(usize, usize)>, goal: usize, n: usize, nrows: usize) -> usize {
-    
-    let mut stack = vec![goal];
-    while let Some(node) = stack.pop() {
-        let n = node % n;
-        visited.insert((n / nrows, n % nrows));
-        if dist[node] == 0 {
-            continue;
-        }
-        for neigh in &adj[node] {
-            if dist[neigh.node] == (dist[node] - neigh.cost) {
-                stack.push(neigh.node);
-            } 
-        }
-    }
-    visited.len()
-}
-
 fn solve() {
     let (grid, s, g) = parse();
     let nodes = grid.nrows * grid.ncols;
@@ -156,90 +126,62 @@ fn solve() {
         // first north facing graph
         let idx = offset_north + col + grid.ncols * row;
         if grid[row - 1][col] != '#' {
-            graph[idx].push(Edge {
-                node: offset_north + col + grid.ncols * (row - 1),
-                cost: 1,
-            });
+            graph[idx].push(Edge::new(offset_north + col + grid.ncols * (row - 1), 1));
         }
-        graph[idx].push(Edge {
-            node: idx - offset_north + offset_east,
-            cost: 1000,
-        });
-        graph[idx].push(Edge {
-            node: idx - offset_north + offset_west,
-            cost: 1000,
-        });
+        graph[idx].push(Edge::new(idx - offset_north + offset_east, 1000));
+        graph[idx].push(Edge::new(idx - offset_north + offset_west, 1000));
 
         // then west
         let idx = offset_west + col + grid.ncols * row;
-        if grid[row][col+1] != '#' {
-            graph[idx].push(Edge {
-                node: offset_west + (col+1) + grid.ncols * row,
-                cost: 1,
-            });
+        if grid[row][col + 1] != '#' {
+            graph[idx].push(Edge::new(offset_west + (col + 1) + grid.ncols * row, 1));
         }
-        graph[idx].push(Edge {
-            node: idx - offset_west + offset_north,
-            cost: 1000,
-        });
-        graph[idx].push(Edge {
-            node: idx - offset_west + offset_south,
-            cost: 1000,
-        });
+        graph[idx].push(Edge::new(idx - offset_west + offset_north, 1000));
+        graph[idx].push(Edge::new(idx - offset_west + offset_south, 1000));
 
         // then south
         let idx = offset_south + col + grid.ncols * row;
         if grid[row + 1][col] != '#' {
-            graph[idx].push(Edge {
-                node: offset_south + col + grid.ncols * (row + 1),
-                cost: 1,
-            });
+            graph[idx].push(Edge::new(offset_south + col + grid.ncols * (row + 1), 1));
         }
-        graph[idx].push(Edge {
-            node: idx - offset_south + offset_east,
-            cost: 1000,
-        });
-        graph[idx].push(Edge {
-            node: idx - offset_south + offset_west,
-            cost: 1000,
-        });
+        graph[idx].push(Edge::new(idx - offset_south + offset_east, 1000));
+        graph[idx].push(Edge::new(idx - offset_south + offset_west, 1000));
 
         // then east
         let idx = offset_east + col + grid.ncols * row;
-        if grid[row][col-1] != '#' {
-            graph[idx].push(Edge {
-                node: offset_east + (col-1) + grid.ncols * row,
-                cost: 1,
-            });
+        if grid[row][col - 1] != '#' {
+            graph[idx].push(Edge::new(offset_east + (col - 1) + grid.ncols * row, 1));
         }
-        graph[idx].push(Edge {
-            node: idx - offset_east + offset_north,
-            cost: 1000,
-        });
-        graph[idx].push(Edge {
-            node: idx - offset_east + offset_south,
-            cost: 1000,
-        });
+        graph[idx].push(Edge::new(idx - offset_east + offset_north, 1000));
+        graph[idx].push(Edge::new(idx - offset_east + offset_south, 1000));
     }
     // fix the end such that we have only one
-    // this can be a bug
     let goal_idx = g.1 + g.0 * grid.ncols;
-    graph[goal_idx + offset_north].push(Edge {
-        node: goal_idx + offset_east,
-        cost: 0,
-    });
-    graph[goal_idx + offset_west].push(Edge {
-        node: goal_idx + offset_east,
-        cost: 0,
-    });
-    graph[goal_idx + offset_south].push(Edge {
-        node: goal_idx + offset_east,
-        cost: 0,
-    });
+    graph[goal_idx + offset_north].push(Edge::new(goal_idx + offset_east, 0));
+    graph[goal_idx + offset_west].push(Edge::new(goal_idx + offset_east, 0));
+    graph[goal_idx + offset_south].push(Edge::new(goal_idx + offset_east, 0));
 
-    let start =  s.1 + s.0 * grid.ncols + offset_east;
+    let start = s.1 + s.0 * grid.ncols + offset_east;
     let goal = g.1 + g.0 * grid.ncols + offset_east;
     let dist = shortest_path(&graph, start, goal);
     println!("{}", dist[goal]);
-    println!("{}", backtrack(&rev_graph(&graph), &dist, HashSet::new(), goal, nodes, grid.nrows));
+
+    // and then just dfs backwards
+    let graph = rev_graph(&graph);
+    let mut visited = HashSet::new();
+    let mut stack = vec![goal];
+
+    while let Some(node) = stack.pop() {
+        let n = node % nodes;
+        visited.insert((n / grid.nrows, n % grid.nrows));
+        if dist[node] == 0 {
+            continue;
+        }
+        for neigh in &graph[node] {
+            if dist[neigh.node] == (dist[node] - neigh.cost) {
+                stack.push(neigh.node);
+            }
+        }
+    }
+    println!("{}", visited.len());
 }
