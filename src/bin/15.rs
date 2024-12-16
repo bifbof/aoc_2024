@@ -109,11 +109,7 @@ fn do_move(grid: &mut Grid, pos: (usize, usize), m: &Move) {
 }
 
 fn solve(part1: bool) {
-    let (mut grid, moves) = if part1 {
-        parse1()
-    } else {
-        parse2()
-    };
+    let (mut grid, moves) = if part1 { parse1() } else { parse2() };
     let nrows = grid.len();
     let ncols = grid.first().unwrap().len();
     let mut pos = (1..nrows)
@@ -131,7 +127,7 @@ fn solve(part1: bool) {
     for (ridx, row) in grid.iter().enumerate() {
         for (cidx, val) in row.iter().enumerate() {
             count += match (val, part1) {
-                (&'O', true) | (&'[', false)  => ridx * 100 + cidx,
+                (&'O', true) | (&'[', false) => ridx * 100 + cidx,
                 _ => 0,
             };
         }
