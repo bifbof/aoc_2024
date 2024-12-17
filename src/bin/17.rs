@@ -1,3 +1,8 @@
+// This one was soo much fun
+// I overengineered the first part completely
+// could have translated my program by hand 100x faster
+// but writing a small interpreter was quite fun.
+// and then finding the solution of the second part *chef kiss*
 use itertools::Itertools;
 
 type Program = Vec<u8>;
