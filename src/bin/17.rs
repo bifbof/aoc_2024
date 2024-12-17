@@ -57,6 +57,15 @@ fn num_octal_digits(num: usize) -> Option<usize> {
     }
 }
 
+// how does this search work?
+// the program works a bit like this
+// B = A % 8
+// ...
+// A = A / 8
+// JNZ to start
+// so the last output is only dependent on the last digit of A
+// we can find possible solutions for this
+// and then repeat it for the next digit of A recursively
 fn search(p: &Program) -> Vec<usize> {
     let mut stack = vec![0];
     let mut solutions = Vec::new();
