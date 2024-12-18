@@ -16,9 +16,9 @@ struct State {
 }
 
 impl State {
-    fn new(register: Vec<usize>) -> State {
+    fn new(registers: [usize; 3]) -> State {
         State {
-            registers: register.try_into().unwrap(),
+            registers,
             ip: 0,
             output: Vec::new(),
         }
@@ -76,7 +76,7 @@ fn search(p: &Program) -> Vec<usize> {
     let mut solutions = Vec::new();
 
     while let Some(num) = stack.pop() {
-        if num_octal_digits(num).unwrap_or(0) == p.len() -1 {
+        if num_octal_digits(num).unwrap_or(0) == p.len() - 1 {
             solutions.push(num);
             continue;
         }
@@ -86,7 +86,7 @@ fn search(p: &Program) -> Vec<usize> {
             let Some(len) = num_octal_digits(new) else {
                 continue;
             };
-            let mut s = State::new(vec![new, 0, 0]);
+            let mut s = State::new([new, 0, 0]);
             run(&mut s, p);
             if s.output[0] == p[p.len() - len - 1] {
                 stack.push(new);
@@ -105,14 +105,14 @@ fn parse() -> (State, Program) {
         .split(',')
         .map(|n| n.parse().unwrap())
         .collect();
-    let regs = regs
+    let regs: Vec<usize> = regs
         .split("\n")
         .map(|line| {
             let (_, num) = line.split_once(": ").unwrap();
             num.parse().unwrap()
         })
         .collect();
-    let state = State::new(regs);
+    let state = State::new(regs.try_into().unwrap());
     (state, program)
 }
 
@@ -171,7 +171,7 @@ fn exec(instr: Instruction, oprnd: Operand, s: &mut State) {
             s.ip += 2;
         }
         Out => {
-            s.output.push(val.try_into().unwrap());
+            s.output.push(val.to_le_bytes()[0]);
             s.ip += 2;
         }
         Jnz => {
