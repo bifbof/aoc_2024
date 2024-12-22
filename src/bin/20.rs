@@ -19,7 +19,7 @@ impl<T> Deref for Grid<T> {
 }
 
 impl<T> Grid<T> {
-    fn checked_add_signed(
+    const fn checked_add_signed(
         &self,
         pos: (usize, usize),
         delta: (isize, isize),
