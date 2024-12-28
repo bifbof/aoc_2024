@@ -34,8 +34,7 @@ fn next_secret(mut s: u32) -> u32 {
     let mask = (1 << 24) - 1;
     s = ((s << 6) ^ s) & mask;
     s = (s >> 5) ^ s;
-    s = ((s << 11) ^ s) & mask;
-    return s;
+    ((s << 11) ^ s) & mask
 }
 
 fn part2() {
@@ -54,7 +53,7 @@ fn part2() {
         }
         for (k, v) in num_combos {
             let e: &mut usize = combos.entry(k).or_default();
-            *e = *e + usize::from(v);
+            *e += usize::from(v);
         }
     }
     println!("{}", combos.values().max().unwrap());

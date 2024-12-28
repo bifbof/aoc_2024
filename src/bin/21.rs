@@ -15,7 +15,7 @@ enum Dir {
 }
 
 impl Dir {
-    fn goto(&self, other: &Self) -> Vec<Vec<Dir>> {
+    fn goto(&self, other: &Self) -> Vec<Vec<Self>> {
         if self == other {
             return vec![vec![Activate]];
         }

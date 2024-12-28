@@ -16,8 +16,8 @@ struct State {
 }
 
 impl State {
-    fn new(registers: [usize; 3]) -> State {
-        State {
+    fn new(registers: [usize; 3]) -> Self {
+        Self {
             registers,
             ip: 0,
             output: Vec::new(),
