@@ -13,7 +13,7 @@ fn parse() -> (Graph, Vec<String>) {
     let mut graph = Graph::new();
     let mut seen = HashMap::new();
     for (n0, n1) in data.lines().map(|s| s.split_once('-').unwrap()) {
-        let [c0, c1] = [n0, n1].map(|s| s.to_string());
+        let [c0, c1] = [n0, n1].map(str::to_string);
         let [e0, e1] = [c0, c1].map(|c| {
             let len = seen.len();
             *seen.entry(c).or_insert_with(|| {
