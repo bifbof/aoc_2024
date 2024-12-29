@@ -21,8 +21,8 @@ fn solve() {
         }
         p2 += num_possible;
     }
-    println!("{}", p1);
-    println!("{}", p2);
+    println!("{p1}");
+    println!("{p2}");
 }
 
 fn possible_pattern(pattern: &str, designs: &Vec<String>) -> usize {

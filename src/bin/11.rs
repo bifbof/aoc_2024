@@ -21,7 +21,7 @@ fn part1() {
     for val in nums {
         count += dfs(val, 75, &mut cache);
     }
-    println!("{}", count);
+    println!("{count}");
 }
 
 fn dfs(num: usize, steps: usize, cache: &mut Cache) -> usize {

@@ -40,7 +40,7 @@ fn next_secret(mut s: u32) -> u32 {
 fn part2() {
     let nums = parse();
     let mut combos = HashMap::new();
-    for num in nums.iter() {
+    for num in &nums {
         let mut num_combos = HashMap::new();
         let it = IterSecret {
             num: *num,

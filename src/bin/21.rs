@@ -15,7 +15,7 @@ enum Dir {
 }
 
 impl Dir {
-    fn goto(&self, other: &Self) -> Vec<Vec<Self>> {
+    fn goto(self, other: Self) -> Vec<Vec<Self>> {
         if self == other {
             return vec![vec![Activate]];
         }
@@ -133,7 +133,7 @@ fn dist(from: Dir, to: Dir, level: u8, cache: &mut HashMap<(Dir, Dir, u8), usize
         return cache[&key];
     }
     let mut min_cost = usize::MAX;
-    for path in from.goto(&to) {
+    for path in from.goto(to) {
         let mut cost = 0;
         let mut curr = Activate;
         for next in path {

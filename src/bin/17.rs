@@ -24,14 +24,14 @@ impl State {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 enum Operand {
     Literal(u8),
     Register(RegId),
     Invalid,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 enum Instruction {
     Div(RegId),
     Xor(RegId),
@@ -45,7 +45,7 @@ fn main() {
     run(&mut s, &p);
     println!("{}", s.output.iter().map(|v| v.to_string()).join(","));
     let sols = search(&p);
-    println!("{}", sols.iter().min().unwrap_or(&0))
+    println!("{}", sols.iter().min().unwrap_or(&0));
 }
 
 fn run(s: &mut State, p: &Program) {
@@ -106,7 +106,7 @@ fn parse() -> (State, Program) {
         .map(|n| n.parse().unwrap())
         .collect();
     let regs: Vec<usize> = regs
-        .split("\n")
+        .split('\n')
         .map(|line| {
             let (_, num) = line.split_once(": ").unwrap();
             num.parse().unwrap()
@@ -176,9 +176,9 @@ fn exec(instr: Instruction, oprnd: Operand, s: &mut State) {
         }
         Jnz => {
             if s.registers[0] != 0 {
-                s.ip = val
+                s.ip = val;
             } else {
-                s.ip += 2
+                s.ip += 2;
             }
         }
     }

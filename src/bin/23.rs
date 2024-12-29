@@ -42,7 +42,7 @@ fn solve() {
         for (one, two) in g[node].iter().tuple_combinations() {
             if g[*one].contains(two) && g[*two].contains(one) {
                 let mut clique = vec![node, *one, *two];
-                clique.sort();
+                clique.sort_unstable();
                 cliques.insert(clique);
             }
         }
@@ -56,7 +56,7 @@ fn solve() {
             break;
         }
         let mut bigger_cliques = BTreeSet::new();
-        for clique in cliques.iter() {
+        for clique in &cliques {
             // do intersection of all members
             let mut candidates: BTreeSet<usize> = BTreeSet::from_iter(0..nodes);
             for member in clique {
@@ -74,6 +74,6 @@ fn solve() {
     }
     let answer = cliques.first().unwrap();
     let s = answer.iter().map(|e| &trans[*e]).sorted_unstable().join(",");
-    println!("{}", s);
+    println!("{s}");
 
 }
