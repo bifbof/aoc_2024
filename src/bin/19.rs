@@ -5,8 +5,8 @@ fn main() {
 fn parse() -> (Vec<String>, Vec<String>) {
     let data = std::fs::read_to_string("input/19.txt").unwrap();
     let (designs, patterns) = data.split_once("\n\n").unwrap();
-    let patterns = patterns.lines().map(str::to_string).collect();
-    let designs: Vec<String> = designs.split(", ").map(str::to_string).collect();
+    let patterns = patterns.lines().map(<_>::to_string).collect();
+    let designs: Vec<String> = designs.split(", ").map(<_>::to_string).collect();
     (designs, patterns)
 }
 

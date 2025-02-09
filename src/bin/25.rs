@@ -19,7 +19,7 @@ fn parse_entry(s: &str) -> Either<Key, Lock> {
         .filter(|(_, c)| c == &'#')
         .for_each(|(i, _)| entry[i] += 1);
 
-    if &s[..1] == "#" {
+    if s.starts_with('#') {
         Either::Right(entry)
     } else {
         Either::Left(entry)

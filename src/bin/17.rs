@@ -43,7 +43,7 @@ enum Instruction {
 fn main() {
     let (mut s, p) = parse();
     run(&mut s, &p);
-    println!("{}", s.output.iter().map(u8::to_string).join(","));
+    println!("{}", s.output.iter().map(<_>::to_string).join(","));
     let sols = search(&p);
     println!("{}", sols.iter().min().unwrap_or(&0));
 }
